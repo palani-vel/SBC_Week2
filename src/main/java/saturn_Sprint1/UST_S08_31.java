@@ -65,12 +65,12 @@ public class UST_S08_31 {
 		search_List.sendKeys("testleaf", Keys.ENTER);
 
 		// 7) Click on the displayed Account Dropdown icon and select Edit
-		Thread.sleep(3000);
+		//Thread.sleep(3000);
 		
-		//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		WebElement dd_1stRow = driver.findElement(By.xpath("(//table/tbody/tr/td[6]//div//span/span[1])[1]"));
-		//wait.until(ExpectedConditions.elementToBeClickable(dd_1stRow));
-		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebElement dd_1stRow = driver.findElement(By.xpath("//table/tbody/tr[1]/td[6]/span/div"));
+		WebElement acc_Name_1stRow = driver.findElement(By.xpath("//table/tbody/tr[1]/th/span/a"));
+		wait.until(ExpectedConditions.attributeToBe(acc_Name_1stRow, "title", "testleaf"));
 		dd_1stRow.click();
 
 		driver.findElement(By.xpath("//a[@title='Edit']")).click();
@@ -84,13 +84,66 @@ public class UST_S08_31 {
 		driver.findElement(By.xpath("(//button[contains(@class,'slds-combobox__input')])[4]")).click();
 		
 		driver.findElement(By.xpath("//div[@class='slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-dropdown_left slds-dropdown_length-with-icon-7']/lightning-base-combobox-item[19]")).click();
-		/*
-		 *  
-		 * 10)Enter Billing Address 11)Enter Shipping Address 12)Select Customer
-		 * Priority as Low 13)Select SLA as Silver 14) Select Active as NO 15) Enter
-		 * Unique Number in Phone Field 16)Select Upsell Oppurtunity as No 17)Click on
-		 * save and verfiy Phone number
-		 */
+		
+		//10)Enter Billing Address
+		WebElement bill_Addr_Field = driver.findElement(By.xpath("(//textarea[@class='slds-textarea'])[1]"));
+		bill_Addr_Field.clear();
+		bill_Addr_Field.sendKeys("121,1st Cross Street, Chennai");
+		
+		//11)Enter Shipping Address
+		WebElement ship_Addr_Field = driver.findElement(By.xpath("(//textarea[@class='slds-textarea'])[2]"));
+		ship_Addr_Field.clear();
+		ship_Addr_Field.sendKeys("121,1st Cross Street, Chennai");
+		
+		//12)Select Customer Priority as Low
+		WebElement cus_Priority_Field = driver.findElement(By.xpath("//button[contains(@aria-label,'Customer Priority')]"));
+		driver.executeScript("arguments[0].scrollIntoView(true);", cus_Priority_Field);
+		cus_Priority_Field.click();
+		driver.findElement(By.xpath("//span[text()='Low']")).click();
+		
+		//13)Select SLA as Silver
+		driver.findElement(By.xpath("//button[contains(@aria-label,'SLA')]")).click();
+		driver.findElement(By.xpath("//span[text()='Silver']")).click();	
+		
+		//14) Select Active as NO
+		driver.findElement(By.xpath("//button[contains(@aria-label,'Active')]")).click();
+		driver.findElement(By.xpath("(//div[contains(@class,'slds-combobox slds-dropdown')])[9]/div[2]/lightning-base-combobox-item[2]/span[2]/span")).click();
+		
+		//15) Enter Unique Number in Phone Field
+		WebElement phone_field = driver.findElement(By.xpath("//input[@name='Phone']"));
+		driver.executeScript("arguments[0].scrollIntoView(true);", phone_field);
+		phone_field.clear();
+		phone_field.sendKeys("9962165493");
+		
+		//16)Select Upsell Oppurtunity as No
+		WebElement upsell_Oppurtunity_Field = driver.findElement(By.xpath("//button[contains(@aria-label,'Upsell Opportunity')]"));
+		driver.executeScript("arguments[0].scrollIntoView(true);", upsell_Oppurtunity_Field);
+		upsell_Oppurtunity_Field.click();
+		driver.findElement(By.xpath("(//div[contains(@class,'slds-combobox slds-dropdown')])[8]/div[2]/lightning-base-combobox-item[3]/span[2]/span")).click();
+		
+		//17)Click on save and verfiy Phone number
+		driver.findElement(By.xpath("//button[text()='Save']")).click();
+		
+		Thread.sleep(3000);
+		//WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		//wait.until(ExpectedConditions.visibilityOf(search_List));
+		driver.findElement(By.xpath("//button[@data-element-id='searchClear']")).click();
+		search_List.sendKeys("testleaf", Keys.ENTER);
+		
+		Thread.sleep(3000);
+		String phone = driver.findElement(By.xpath("//table/tbody/tr[1]/td[4]/span/span[1]")).getText();
+		System.out.println(phone);
+		phone = phone.replace("(", "");
+		phone = phone.replace(")", "");
+		phone = phone.replace("-", "");
+		phone = phone.replaceAll(" ", "");
+		System.out.println(phone);
+		
+		if(phone.contains("9962165493")) {
+			System.out.println("Phone number Verified successfully");
+		} else {
+			System.out.println("Phone number NOT Verified successfully");
+		}
 
 	}
 
