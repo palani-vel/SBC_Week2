@@ -59,7 +59,7 @@ public class UST_S08_29 {
 		WebElement sort_CloseDate = driver.findElement(By.xpath("//table/thead/tr/th[@title='Close Date']/div/a"));
 		//WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(30));
 		//wait.until(ExpectedConditions.elementToBeClickable(sort_CloseDate));
-		//js.executeScript("arguments[0].click()", sort_CloseDate);
+		//js.executeScript("arguments[0].click();", sort_CloseDate);
 		sort_CloseDate.click();
 		Thread.sleep(2000);
 		sort_CloseDate.click();
